@@ -587,7 +587,7 @@ document.head               -> <head>
 document.title             -> <title>
 ```
 
-#####DOM树：就是把页面的所有节点形成一个树形结构。          
+##### DOM树：就是把页面的所有节点形成一个树形结构。          
 > 如何获取节点的类型？nodeType   
 >>文档节点（document）
 >>元素节点（element）
@@ -600,11 +600,11 @@ document.title             -> <title>
 
 ##### elem.childNodes : elem元素下面的所有子节点
 
-        elem.childNodes.length  子节点长度
+    elem.childNodes.length  子节点长度
 
-        console.log( elem.childNodes[0].nodeType );   8 注释节点
-        console.log( elem.childNodes[1].nodeType );   3 文本节点
-        console.log( elem.childNodes[2].nodeType );   1 元素节点
+    console.log( elem.childNodes[0].nodeType );   8 注释节点
+    console.log( elem.childNodes[1].nodeType );   3 文本节点
+    console.log( elem.childNodes[2].nodeType );   1 元素节点
         
 
 ```javascript
@@ -633,11 +633,11 @@ for(var i=0;i<ul.children.length;i++){
 > offsetParent   (有定位模式的祖先节点) 
 
        
-        console.log( document.documentElement.parentNode );  document 9
-        console.log( document.documentElement.parentElement );  null
-        
-        console.log( document.parentNode );   null
-        console.log( elem.offsetParent );    找有定位模式的祖先节点 body最外层的祖先 , 跟CSS中的绝对定位查找是一样的。
+    console.log( document.documentElement.parentNode );  document 9
+    console.log( document.documentElement.parentElement );  null
+    
+    console.log( document.parentNode );   null
+    console.log( elem.offsetParent );    找有定位模式的祖先节点 body最外层的祖先 , 跟CSS中的绝对定位查找是一样的。
       
 
 
