@@ -1,0 +1,206 @@
+
+
+git工具：
+    1. 对代码进行版本管理。可以很方便的获取之前写过的代码。防止之前的代码丢失。
+    2. 多人协作开发。A、B、C三个人同时去改一个文件 index.html。防止互相之间的代码冲突。
+
+
+git工具下载地址:
+	官网：https://git-scm.com/
+	    https://desktop.github.com/		
+
+    通过右键可以查看到git是否安装成功：git bash 就是 git工具的代码运行窗口
+
+
+github是一个网站：
+    开源项目、远程仓库、个人博客、电子书、社交、还可以充当中央服务器等等。
+
+
+集成式与分布式:
+
+    git工具诞生之前，我们要对代码进行管本管理 -> svn cvs 等等。
+
+    svn cvs工具 : 集成式
+    git工具 : 分布式  ( 95%以上的公司都在采用git工具来做版本 )
+
+
+要想学习git工具，先要了解git的分区？
+
+    git分为三个区：
+        工作区 : 就是电脑中指定文件夹中的所有文件。
+
+        暂存区 : .git文件夹中
+
+        版本区(分支) : .git文件夹中
+
+    如何去生成一个版本？
+
+        工作区 -> 暂存区 ->  版本区（master分支，即主分支）
+
+        注：在整个传递的过程中并不是传递文件本身，而是去传递文件的状态（曾改删），版本中存储的是响应的状态变化（存储的快照）v1 v2 v3 
+
+        为什么不直接工作区->版本区？而是需要先通过暂存区呢？
+            让暂存区作为过渡层，可以保护工作区和版本区。
+        
+
+
+git常见命令：
+    git config --list : 查看git下的配置信息（有用户名和邮箱）
+
+    在使用git工具之前，先去设置贡献者
+    git config --global user.name “xxx”  -> 设置用户名
+ 	git config --global user.email “xxx”  -> 设置邮箱
+
+    git config --global --unset user.name  -> 删除用户名的配置
+
+    git init : 对新项目的进行git工具的添加，进行项目初始化操作。
+
+    git clone : 对已有项目的git版本的克隆操作
+
+    git add : 工作区 添加 状态 到 暂存区
+
+        git add [filename] : 指定的文件提交到暂存区
+        git add . : 所有标红的文件，一起提交到暂存区
+
+    git commit : 暂存区 添加 状态 到 版本区（生成一个版本）
+        -m "本次提交的注释内容"
+        注：commit命名一执行，就会把暂存区中的所有状态同步到版本区。
+
+    git status : 查看状态 ( 可以知道目前文件是一个什么样的状态 )
+        一个文件是红颜色的时候，表示这个文件在工作区中的状态跟暂存区和版本区里的状态不一样。
+        一个文件是绿颜色的时候，表示这个文件在工作区和暂存区中的状态是一样的，但是跟版本区中的状态是不一样的。  
+        On branch master nothing to commit, working tree clean : 工作区跟暂存区和版本区状态是完全一样的。
+
+    git log : 来查看 版本区 中的 所有版本信息的。
+        //commit_id : 版本的唯一标识，可以找到唯一对应的版本。
+        commit da3d4299a3132b3313d4e3b2ebae951a5826abbc (HEAD -> master) 
+        Author: dupeng <new666@qq.com>
+        Date: Wed Aug 5 14:27:59 2020 +0800
+
+            add a.txt
+
+        --pretty=oneline ： 可以让查看版本信息的时候，更加简洁，已一行信息显示。
+
+        注：当版本信息特别多的情况下，会显示不全，通过回车查看后面的信息。输入q退出界面。
+
+    git commit -a -m "注释" : 当一个文件被git维护过一次后，可以把add commit进行一次性操作。
+
+    git rm : 删除到暂存区
+        删文件 和 add 的过程
+
+    git diff   (  工作区 与 暂存区  )
+	git diff  --cached(--staged)	（ 暂存区 与 分支 ）
+ 	git diff master（ 工作区 与 分支 ）
+
+
+    git checkout [commit_id] <filename> : 从指定的commit_id版本中检出指定的文件，到工作区和暂存区。
+
+    git reset --hard [commit_id] : 可以回到过去的某个指定的版本，通过commit_id
+
+        git reset --hard HEAD : 回到最新的版本
+        git reset --hard HEAD^ : 回到最新的版本的前一个版本
+        git reset --hard HEAD^^ : 回到最新的版本的前一个版本的前一个版本
+        git reset --hard HEAD~50 : 回到最新的版本的前50个版本的样子
+
+        reset和checkout的区别：
+            checkout ：不会影响到版本的，只是检出之前的文件。
+            reset : 会影响到版本，可以回到过去。
+
+    git reflog : 可以查看到之前做过的所有操作行为，就可以找到相关的commit_id
+
+git bash 中：
+    clear : 清屏
+
+
+//-----------------------------------------
+
+
+github网站：
+
+    怎么在自己的电脑中利用git工具把代码上传到github网站呢？
+
+        1. 注册github账号，在这个账号下面去创建一个仓库。
+
+        2. 让电脑去上传文件到指定的仓库。
+
+                两种方式：https协议 ssh协议
+        
+        3. 创建.ssh文件夹。
+                C:\Users\[管理员]\.ssh
+
+                通过这条命名去创建.ssh文件夹：ssh-keygen -t rsa -C "youremail@example.com"
+
+                .ssh文件夹中有两个文件：一个私钥，一个公钥。
+                    把公钥的信息，添加到github用户的settings中，找到SSH key这个选项。 
+
+        4. git remote : 查看远程仓库名字
+            git remote -v: 查看远程仓库名字和地址
+
+            git remote add <远程仓库的名字> <远程仓库的地址>
+            git remote add origin git@github.com:ghostdp/gitstudy.git
+
+        5. 最后就可以通过git命令来把文件上传到github网站
+
+            git push <远程仓库的名字> <本地分支的名字>
+            git push origin master -u(第一次最好添加一下)
+
+.gitignore文件：
+
+    在这个文件中添加的内容，都是git工具不需要去维护和管理的。
+
+
+git clone <github上仓库的地址> 
+git clone git@github.com:ghostdp/gitstudy.git 就可以下载了
+
+如何让多个人能够上传文件到github网站呢？
+
+    去设置项目的协作者，这样协作者就有权限上传文件。
+
+    如果两个人写的代码出现了冲突，是上传不了文件的，会报错。
+
+        解决：在每次上传代码之前，最好要去拉去最新代码 pull , 然后再去上传
+
+        原则：先 pull ( 有冲突先去解决冲突 ) 再 push
+
+        git pull <远程仓库的名字> <本地分支的名字>
+        git pull origin master
+
+git tag : 里程碑
+
+    vmall : 华为商城  vmall 1.0.0   vmall 2.0.0 ...
+
+    git tag    :查看里程碑
+    git tag v1.0.0   :生成里程碑
+    git push origin v1.0.0   :push里程碑
+
+
+
+git branch : 查看所有的分支
+    * master : 表示当前所处的分支
+    git branch <分支的名字> : 创建一个分支          ->git branch A_tab
+    git checkout <分支的名字> : 切换到指定的分支     ->git checkout A_tab
+
+    git branch -d <分支的名字> : 删除指定的分支       ->git branch -d A_tab
+
+git merge : 合并分支
+
+    我想把B_tab分支合并到master分支上，要先切换到master分支上，然后再执行 git merge B_tab
+
+git push origin A_tab       ：push分支
+
+
+markdown语法：
+    markdown语法跟html标签很像的东西，主要优势是处理网页内容会更快一些。
+
+    markdown中也可以做：
+        列表
+        标题    #  ##  ###  
+        段落
+        链接
+        图片
+        ...
+
+    index.html  list.html
+    xxx.md  yyy.md
+
+    html：h1 h2 h3 ...

@@ -1,0 +1,102 @@
+
+
+this : 表示当前执行代码的环境对象 ， 在函数内部，this的值取决于函数被调用的方式。
+        //注：在函数内部进行使用this操作
+        //注：取决于函数被调用的方式
+        //注：当有多个嵌套函数的时候，this只跟最近的当前函数有关系
+
+
+            function foo(){
+                console.log(this);  //不知道
+            }
+            
+
+            function foo(){
+                console.log(this); 
+            }
+            foo();  //在调用的时候，我就知道this是谁了？当函数名前面没有任何代码的时候，this就是window
+
+            123.foo();      this :123
+            elem.foo();     this:elem
+            'hello'.foo();  this:hello
+            
+
+            var elem = document.getElementById('elem')      
+            elem.onclick = function(){                  当点击elem的时候 -> elem.onclick();
+                console.log(this);
+            };
+
+            
+
+
+            var elem = document.getElementById('elem');
+            elem.onclick = function(){
+                foo();
+            };
+            function foo(){
+                this.style.background = 'red';                  // window
+            }
+            
+
+            var elem = document.getElementById('elem');
+            elem.onclick = foo;
+            function foo(){
+                this.style.background = 'red';                  // elem
+            }
+            
+
+            var obj = {
+                username : 'xiaoming',
+                showName : function(){
+                    console.log( this.username );
+                }
+            };
+            obj.showName();
+            
+
+            function foo( fn ){                                      // fn = obj.showName
+                fn();                                                // fn前面没有东西，那么函数中this就是window
+            }
+            foo( obj.showName );
+    
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------    
+call()、apply()、bind()  : 能够改变this指向的方法
+
+            function foo( num , num2 ){
+                console.log(this);
+            }
+            //foo();
+
+     //foo.call( document , 5 , 6);          //call的第一个参数是函数this指向 ，call方法从第二个参数开始就是函数的实参
+
+     //foo.apply( document , [ 5 , 6 ] );       //apply的第一个参数是函数this指向 , apply方法只有两个参数 ，第二个参数类似于数组或数组 elems arguments
+            
+
+    foo.bind( document );                        // bind并不会调用这个函数，只会改指向
+            //foo.bind( document , 5 , 6 )();   // bind如何执行
+            //foo.bind( document )( 5 , 6 );   // bind如何执行
+            //foo.bind( document , 5 )( 6 );   // bind如何执行
+
+
+            var elem = document.getElementById('elem');
+            elem.onclick = foo.call(document);
+            function foo(){
+                console.log(this);
+            }
+            
+
+            elem.onclick = function(){
+                foo.call(document);
+            };
+            function foo(){
+                console.log(this);
+            }
+            
+
+            elem.onclick = foo.bind(document);          //bind的场景，很方便，不用像call一样包上一层函数
+
+            function foo(){
+                console.log(this);
+            }
+
+    

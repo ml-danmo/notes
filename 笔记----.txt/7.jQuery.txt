@@ -1,0 +1,317 @@
+jquery : 一个库 ，别人写好的代码，直接我们拿来进行使用。
+        这个代码就是一个JS文件。jquery.js -> 文件里写的还是原生JS。例如：封装了 ajax、jsonp、move运动。
+        所有说jquery帮我们把好多底层的功能进行了封装，我们只要会去使用，做具体的业务就可以了。
+
+jquery的愿景：写越少的代码，做越多的事情。JS的加强版，还是JS的语法，只不过进行封装，写法上要按照JQ提供的方式去写。
+        1. 获取元素 
+        2. 封装大量底层的功能
+        3. 做了很多底层的兼容处理。 
+
+jquery库 : 库一般只单纯的针对某一项技术而言的，比如：JQ就是专门针对JS的。
+vue框架  react框架 : 框架一般是针对多个技术进行封装的，比如：JS、HTML、CSS、后端等等。
+
+jquery库的诞生：2006年诞生的。目前全球前100万的网站，65%已上都是采用JQ开发的。( 微软、百度 )。
+        
+    jquery官网：http://jquery.com
+    jqueury中文官网：https://www.jquery123.com/
+
+
+$ == jQuery : 等价关系
+JQ获取到的元素，最好命名的时候前面加上一个$。为了更好的跟原生JS区分开。
+
+JQ的写法会跟原生JS有很大的不同！！！
+    //     JQ其实内部的写法，就是一个基于面向对象的程序。
+    //     所以在使用JQ的时候，其实就是在使用JQ对象的方法和属性。
+
+    // $().css();
+    // $() -> 对象
+    // 对象.css();
+
+
+ //attr() : 获取或设置元素属性的 , 不仅可以获取自带的属性，也可以获取自定义的属性。
+
+    //$('#elem').attr('title');   
+    //$('#elem').attr('title','hi');
+    //console.log( $('#elem').attr('qianfeng') );
+
+//JQ的链式写法 : 只是针对设置的情况才能进行链式写法，获取操作是没有链式写法的。
+//$('#elem').css('background','red').html('bbbb').click(function(){ alert(123) });
+
+//$() : 比较强大
+
+    $(function(){   //表示DOM加载完，触发的函数
+        console.log( $('#elem') );
+    });
+
+    //window.onload = function(){};  //等整个页面加载
+    //document.addEventListener('DOMContentLoaded',function(){});  //等DOM加载完
+
+// addClass : 添加class removeClass : 删除class  toggleClass: 切换class , 智能添加或删除class
+
+  
+    //$('#elem').addClass('box box2 box3');
+    //$('#elem').removeClass('box');
+    //$('#elem').toggleClass('box');
+
+//$('#elem').hide();  //隐藏元素的方法  show()显示元素  toggle();   //智能的切换显示隐藏
+    $('#elem').toggle(1000);  //1秒过渡显示隐藏 -> width height opacity 
+ 
+
+ //eq() : 找到集合中的某一项，从0开始计数的
+
+    //$('li').first().css('background','red');  // 等价于eq(0)
+    //$('li').last().css('background','blue');  // 等价于eq(length-1)
+
+//slice() : 可以找到一个集合的区间 起始位置， 结束位置
+    //$('li').slice(1,3).css('background','red');
+
+    //prev() 上一个兄弟   next() 下一个兄弟
+    //prevAll()  上面所有兄弟   nextAll() 下面所有兄弟
+    //siblings() : 找所有的兄弟，就是不包含自己
+
+    //$('ul').children().css('border','1px red solid');
+    //$('ul').find('li').css('border','1px red solid');  //find() ：找指定的元素集合。
+
+    //parent() : 找父节点    parents() : 找所有的祖先节点    closest() : 找满足条件的最近的祖先节点（包含元素自身）
+
+
+//$('div').append( $span );    // 类似的方法：appendTo()  prepend()  $('div').after( $span );
+   
+    
+
+删除:
+    //$('div').remove();  // 会删除的比较彻底，当再次添加回来的时候，原来元素有的事件会失效。
+    //$('div').detach();  // 当再次添加回来的时候，原来元素有的事件还在。
+
+克隆节点: var $div = $('div').clone(true);   //参数的含义：可以保留原来被克隆节点的事件的。
+
+ //index() : 就是找当前元素在所有兄弟中的排行，就是索引值。
+
+//each() : 就是遍历JQ获取到的集合
+    $('li').each(function(i,elem){
+        //console.log(elem);  // elem每一个子元素，并且是原生的
+    });
+
+//包装方法：就是给找到的指定元素，添加一个父元素
+
+    //$('span').wrap('<div>');
+    //wrapAll() : 整体包装
+    //$('span').wrapAll('<div>');
+
+    //wrapInner() : 内部包装 , 把所有的子元素包装一个指定的标签
+    //$('span').wrapInner('<div>');
+
+    //unwrap() 删除父元素 ( 不包含body )    
+    //$('span').unwrap();
+
+JQ转原生JS:
+    //var elems = $('#elem').get(); // : 转成一个原生的集合
+    //var elem = $elem.get(0);   // 找到这个原生集合中的第一个元素
+
+    //JQ是做不到获取容器内容的高度
+    //console.log( $('textarea').height() );
+    //console.log( $('textarea').get(0).scrollHeight );
+
+    //利用get()方法可以判断两个元素是否相等
+        //console.log([]==[]);   // false
+        //console.log( $('textarea') == $('textarea') );   // false
+        console.log(  $('textarea').get(0) == $('textarea').get(0)  );  //true 这样可以判断是否是同一个元素节点。
+        
+
+元素的尺寸:
+    获取
+    //console.log( $('#elem').width() );        // content(width)
+    //console.log( $('#elem').innerWidth() );  // content(width) + padding
+    //console.log( $('#elem').outerWidth() );  // content(width) + padding + border
+    //console.log( $('#elem').outerWidth(true) );  // content(width) + padding + border + margin
+    
+    
+    设置
+   //$('#elem').width(300);   // width = content
+   //$('#elem').innerWidth(300);    // width = content - padding
+   //$('#elem').outerWidth(300);    // width = content - padding - border
+   //$('#elem').outerWidth(300,true);    // width = content - padding - border - margin
+    
+    跟原生还有一个重要的区别：JQ中是可以获取到隐藏元素的尺寸大小
+    //console.log( $('#elem').width() );
+
+    可视区的尺寸
+    //console.log(  $(window).width()  );
+    
+    页面的尺寸
+    //console.log( $('body').height() );
+
+
+    滚动距离
+     console.log( $(window).scrollTop() );
+
+//offset()、position()
+        //区别：
+        //offset() : 找一个元素到整个页面的距离。
+        //position() : 跟定位相关的，所以margin值不会考虑在内的。假如祖先节点中存在地位模式，那么这个距离就到有定位的祖先节点结束。
+        console.log( $elem.offset() );  // 返回一个距离的对象
+        //console.log( $elem.offset().left );
+
+// $().click()      $().mouseover()
+// 这些方法还会在源码内调用 on() 方法;底层的 on() 方法 更加的强大，能做更多的事件操作。
+  
+    $('#elem').on('click',function(){
+        alert(123);
+    });
+
+    // 可以通过 空格 的方式 ，添加多事件操作
+    $('#elem').on('click mouseover',function(){
+        console.log(123);
+    });
+
+    $('#elem').on({
+        click : function(){ console.log(123); },
+        mouseover : function(){ console.log(456) }
+    });
+
+    //注：在JQ中，所有的事件操作，都是标准事件写法 addEventLinstener 的方式。
+
+    取消事件  off()
+
+    $('#elem').on('click mouseover',function(){
+        console.log(123);
+        $(this).off();   // 取消了当前这个元素的所有事件
+    }); 
+
+   $('#elem').on('click mouseover',function(){
+        console.log(123);
+        $(this).off('mouseover');   //只会取消指定的事件
+    });
+
+    // 事件的命名空间 , 给事件加名字
+    /* $('#elem').on('click.xiaoming',function(){
+        console.log(123);
+        $(this).off('click.xiaoming');  
+    });
+
+//one() : 事件触发一次
+    $('#elem').one('click',function(){
+        console.log(123);
+    });
+
+// 事件委托：下面是JQ中的委托写法，this是操作的元素，而事件是加给了on前面的元素
+    $('ul').on('click','li',function(){
+        $(this).css('border','1px red solid');
+    });
+
+/$.xxx()   $.yyy()   $.zzz()  ...   工具方法 （ 静态方法 ）
+//工具方法：不仅可以针对JQ元素，也可以针对原生的元素或原生的语言。
+
+    //$.type() : 判断不同的数据类型
+        // console.log( $.type([]) );
+
+    // $.isFunction()
+        //console.log( $.isFunction(function(){})  );
+
+    // $.isNumeric() : 可以自动转类型的
+        //console.log( $.isNumeric('123px') );
+
+    // $.isArray()
+        //console.log( $.isArray([]) );
+
+    // $.isWindow()
+        //console.log( $.isWindow(window) );
+
+    // $.isEmptyObject() : 是不是空对象  []  {}
+         //console.log( $.isEmptyObject({}) );
+
+    //$.isPlainObject() : 是不是对象字面量 {}  new Object()
+        //console.log( $.isPlainObject({username:'xiaoming'}) );
+
+//对对象的拷贝 $.extend()
+
+        var a = {
+            username : 'xiaoming'
+        };
+        var b = $.extend({} , a);  //实现了浅拷贝
+
+
+        var a = {
+            username : { age : 20 }
+        };
+        var b = $.extend(true , {} , a);  //第一个参数：实现了深拷贝
+
+
+/JQ中会自带一些动画效果
+        //show() , hide() , toggle() : 运动的是  width height opacity
+        //fadeIn() , fadeOut()  , fadeToggle() : 淡入淡出  opacity
+        //slideDown()  , slideUp() , slideToggle() : 向上收缩向下展开 : height
+
+    自定义动画:  animate() 
+            //1. 运动的值
+            //2. 运动的时间 ，默认值 400ms
+            //3. 运动的形式 , 默认值 swing(慢快慢)   linear(匀速)
+            //4. 运动结束的回调
+        $('#elem').animate({ left : 400 } , 4000 , 'swing' , function(){
+                alert(123);
+        });
+
+    //delay() : 延迟执行
+        //$('#elem').animate({ left : 400 }).delay(2000).animate({ top : 400 });
+
+    //鼠标移入移出功能，对于一个简写方法 : hover()
+        $('#elem').hover(function(){
+            $(this).stop().animate({width:400,height:400});
+        },function(){
+            $(this).stop().animate({width:200,height:200});
+        });
+
+
+
+$.ajax
+        $.ajax({
+            url : 'data.php',
+            //type : 'POST',
+            //data : { username : 'xiaoming' },
+            //data : 'username=xiaobai',
+            dataType : 'json',  // 会在JQ内部调用 JSON.parse()
+            async : false,   //默认就是true表示异步 , false表示同步
+            success(res){
+                console.log(res);
+            },
+            error(err){
+                console.log(err);
+            }
+        });
+
+
+
+    // jQuery也内置了promise的方式。
+        $.ajax('data.php').then((res)=>{
+            console.log(res);
+        }).catch(()=>{});
+
+
+    // $.ajax() : 属于底层的方法;     还提供了一些高级的接口  $.get()  $.post()
+        $().get() : JQ转成原生JS
+        $.get() : ajax中的get请求
+
+    // $.get('data.php',{'username':'xiaoming'},function(res){});
+    // $.get('data.php',{'username':'xiaoming'},function(res){} , 'json');
+
+    // $.post() : 专门发起post请求，参数跟$.get()参数是完全一样的。
+
+    //$.getJSON() : 专门操作JSONP的。
+        $.getJSON('https://www.bai46,32115,26350&wd=大连&req=2&',function(data){
+            console.log( data );
+        });
+
+
+//创建一个cookie并设置有效时间为7天:
+    //$.cookie('username', 'xiaoming', { expires: 7 });
+
+
+
+
+
+
+
+
+
+
+

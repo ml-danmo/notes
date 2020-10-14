@@ -1,0 +1,106 @@
+######字符串，不是对象，字符串不能添加属性和方法，但是并不代表字符串没有属性和方法。
+
+    var str = 'hello';
+
+1.    console.log( str.length );   字符串的长度
+
+    console.log( str[1] );    这种方式也支持，但是不推荐使用（性能不高）
+
+2.    console.log( str.charAt(1) );    找到指定位置的字符，是推荐的写法（性能高）
+
+3.    console.log( str.charCodeAt(1) );   找到指定字符对应的unicode编码
+
+
+ ---------------------------------------------------------------------------------------------------------------------------
+4.    截取字符串：substring()、slice() 、substr()
+
+        var str = 'hello world!!!';
+
+4.1    console.log(  str.substring(1,3)  );     两个参数 : 起始位置，结束位置（不包含结束位置）
+
+    
+4.1.2    console.log(  str.substring(1)  );      只写一个参数：截取的部分是从起始位置一直到字符串的结束
+
+    
+4.2        console.log( str.slice(1,3) );      两个参数 : 起始位置，结束位置（不包含结束位置）
+
+    区别：
+        1. 顺序的问题。
+                    console.log(  str.substring(3 , 1)  );  两个参数的顺序无所谓的
+                    console.log( str.slice(3,1) ); X  两个参数有顺序问题。
+        2. 是否可以写负数
+                    console.log(  str.substring(-1 , -4)  );   不支持负数写法的
+                    console.log(  str.slice(-4 , -1)  );   d!!
+
+    
+4.3    console.log( str.substr(1,3) );     两个参数：起始位置、截取的个数
+
+----------------------------------------------------------------------------------------
+    
+5    找指定字符的位置：  indexOf()  -> 从前往后
+5.2    lastIndexOf() -> 从后往前
+
+    var str = 'hello weorld!!!';
+   
+    console.log( str.indexOf('e' , 2) );     两个参数：第一个参数指定的字符串，第二个参数：找字符的起始位置(默认0)
+
+    /* var str = 'hello weorld!!!hello weorld!!!hello weorld!!!hello weorld!!!';
+    var value = 'e';
+    for(var i=0;i<str.length;i++){
+        if( str.charAt(i) == value ){
+            console.log( str.indexOf(value , i) );  找每一个e的位置
+            console.log( i );
+        }
+    } */
+    var str = 'hello weorld!!!';
+    console.log( str.lastIndexOf('e',5) );  从5的位置开始往前查找(默认位置在最后)
+
+    var str = 'hello weorld!!!';
+    console.log( str.indexOf('ed') );  多个字符串找位置的，时候返回的第一个字符的位置
+
+       ##&&  注：一旦没有匹配到，就会返回 -1
+
+    /* var str = 'hello weorld!!!';
+    var now = 'el';
+
+    if( str.indexOf(now) > -1 ){
+        console.log('有这个字符');
+    }
+    else{
+        console.log('没有这个字符');
+    } */
+
+-----------------------------------------------------------------------------------------------
+6    查看字符是否存在：includes()、startsWith()、endsWith()
+
+    var str = 'hello weorld!!!';
+    var now = '!';
+    
+6.1  console.log( str.includes(now) );        查看指定的字符串是否被字符串所包含，返回一个布尔值
+    /* if( str.includes(now) ){
+        console.log('有这个字符');
+    }
+    else{
+        console.log('没有这个字符');
+    } */
+
+
+6.2&6.3     startsWith()、endsWith() : 判断是否在起始位置和结束位置（返回布尔值）
+             console.log( str.endsWith(now) );
+
+
+7.    去掉字符的前后空格：trim()、trimLeft()、trimRight()
+        var str = '   he  llo    ';
+        console.log(  '(' + str.trimLeft() + ')' );
+
+8.    字符串转大小写： toUpperCase()、 toLowerCase()
+
+        var str = 'Hello';
+        console.log( str.toUpperCase() );  转大写
+        console.log( str.toLowerCase() );  转小写
+
+9.    分割字符串成数组：split() , 参数就是分隔符
+
+        var str = 'a+b+c+d';
+        console.log( str.split('w') );   ["a+b+c+d"]
+        console.log( str.split('') );   ["a", "+", "b", "+", "c", "+", "d"]   

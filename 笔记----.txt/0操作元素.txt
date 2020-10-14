@@ -1,0 +1,5 @@
+设置样式：      elem.style.width = '400px';
+                
+                console.log( elem.style.width );       行内样式         只能找到style属性中的样式
+
+                console.log(  getComputedStyle(elem).width   );     获取操作：最终样式      

@@ -1,0 +1,243 @@
+    elem.onclick = function(){  //添加一个点击事件(等号后面接的函数叫做事件函数)
+        console.log(123);
+    };
+    //  当我们去点击div的时候去调用 ->  elem.onclick();
+
+    elem.ondblclick = function(){    //双击666，双击事件
+        console.log(123);
+    };
+
+    elem.onmouseover = function(){    //鼠标移入事件
+        console.log(123);
+    };
+
+    elem.onmouseout = function(){    //鼠标移开事件
+        console.log(456);
+    };
+
+
+ 区别：
+        // 触发顺序：down > up > click
+        // click 除了鼠标能触发，键盘也能触发(能够获取焦点的元素，通过回车键触发)
+
+        elem.onmousedown = function(){    //鼠标按下事件
+            console.log(123);
+        };
+
+        elem.onmouseup = function(){    //鼠标抬起事件
+            console.log(456);
+        }; 
+ 
+------------------------------------------------------------------------------------------------
+ input.onfocus = function(){                         //获取焦点触发的事件       onfocus
+        this.style.background = 'red';
+    };
+    input.onblur = function(){                      //失去焦点触发的事件        onblur
+        this.style.background = '';
+    };
+
+
+
+
+    window.onresize = function(){                   //浏览器尺寸改变的时候会触发
+        console.log(123);   
+    }
+
+
+    input.oninput = function(){  //值发生变化时触发（连续）
+        console.log(123);
+    };
+
+    input.onchange = function(){  //值发生变化时触发（失去焦点）
+        console.log(123);
+    };
+
+------------------------------------------------------------------------------------------------------------------
+
+window.onload = function(){  };                 // 等整个页面加载完毕触发的事件
+                
+            
+window.onunload = function(){ };                //等页面关闭的时候触发
+                
+
+            DOMContentLoaded : 也是一个事件 , 标准的事件绑定写法才能触发，这个事件是等DOM加载完就会触发，要比onload先执行。
+            document.addEventListener('DOMContentLoaded',function(){
+                        var img = document.querySelector('img');
+                        console.log( img.width );
+            }); 
+            
+
+
+             input.oninput = function(){                //值发生变化时触发（连续）
+                console.log(123);
+            }; 
+
+
+             input.onchange = function(){               // 值发生变化时触发（失去焦点）
+                console.log(123);
+            }; 
+
+
+
+            
+            input.onselect = function(){                //选中文本的时候会触发
+                console.log(123);
+            }; 
+
+            
+           
+            form.onreset = function(){                  //在表单中，点击重置按钮触发
+                console.log(123);
+            };
+
+
+
+            form.onsubmit = function(){                 //在表单中，点击提交按钮触发 
+                console.log(456);
+                 表单的验证处理
+                if(input.value){
+                    return true;
+                }
+                else{
+                    alert('用户名不能为空');
+                    return false;    阻止表单提交
+                }
+            };
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+event对象：事件中很重要的内容。事件发生以后，会产生一个事件对象，作为参数传给监听函数，可以操作事件的细节部分。
+
+    
+            elem.onclick = function(ev){                    //event对象是可以操作事件细节部分的。它就是函数的第一个形参( 函数是跟事件关联的那个 )
+            
+                ev : 类型是对象
+
+                鼠标坐标，鼠标当前位置到页面的距离 pageX / pageY
+
+                console.log( ev.pageX );
+                
+            };
+
+            ----------------------------------
+            
+            鼠标坐标只能获取，不能设置。
+            
+
+            鼠标坐标：ev.clientX   ev.clientY
+                区别：ev.clientX ev.clientY          -> 可视区的坐标
+                    ev.pageX ev.pageY               -> 到页面的坐标
+
+
+
+
+
+//事件流：就是事件传播的方式。
+            //三个阶段：先捕获、再目标、最后是冒泡
+
+            ev.stopPropagation();           //阻止冒泡（event对象下的）
+
+
+---------------------------------------------------------------------------------------
+事件绑定
+
+    elem.onclick , elem.onmouseover :       普通事件  非标准
+    elem.addEventListener() :               绑定事件  标准  -> W3C推荐
+        //区别：
+            //1. 事件 一个加on ， 另一个不加on
+            //2. 同样的事件，普通的会覆盖；绑定的不会覆盖，都会执行
+            //3. 事件流：普通事件是没有捕获阶段的，绑定是有捕获阶段的
+                //注：事件流是由addEventListener的第三个参数决定的，默认是false(冒泡)可选的true(捕获)
+
+   
+        elem.addEventListener('click',function(ev){
+            console.log(123);
+        }); 
+
+
+
+
+        elem.onclick = function(){
+            console.log(123);
+            elem.onclick = null;            //普通事件的取消写法
+        };
+
+
+
+        elem.addEventListener('click',change);
+        function change(){
+            console.log(123);
+            //取消的时候，也要写两个参数，事件名和要取消的函数
+            elem.removeEventListener('click' , change);                 //绑定事件的取消写法
+        }
+
+
+
+
+
+-------------------------------------------------------------------------------------------
+
+键盘事件 : 通过键盘来触发事件
+
+        //onkeydown : 键盘按下 , 按下不抬起，会一直触发。
+        //onkeypress : 键盘按下（不含功能键）
+        //onkeyup : 键盘抬起
+            //如果能获取焦点的元素是可以直接加键盘事件的 input
+            //如果不能获取焦点的元素，如div是不能添加键盘事件的。
+            //在页面中如果按下键盘想触发事件，document加键盘事件。
+
+
+
+        document.onkeydown = function(ev){
+            console.log(ev.keyCode);               //键盘键值 unicode编码
+                if( ev.keyCode == 13 ){
+                    console.log('回车');
+                } 
+            //console.log( ev.key );                //直接可以找到是哪个键
+            //console.log( ev.repeat );             // 检测是否一直按下，返回一个布尔值
+            //console.log( ev.location );        // 键盘位置
+
+            功能键 : ctrl alt shift ( 跟其他键组合使用 )
+            console.log( ev.ctrlKey );
+            console.log( ev.altKey );
+            console.log( ev.shiftKey );
+
+
+
+------------------------------------------------------------------------
+
+阻止默认事件
+
+        document.onkeydown = function(ev){
+            if(ev.keyCode == 32 || ev.keyCode == 116){
+                //return false;        //可以阻止默认行为
+                ev.preventDefault();   //可以阻止默认行为 , W3C推荐写法
+            }
+        }
+
+
+
+        document.addEventListener('keydown',function(ev){
+            if(ev.keyCode == 32 || ev.keyCode == 116){
+                //return false;                             // 绑定事件中是不好用的
+                ev.preventDefault();                        //绑定支持这种标准写法
+            }
+        }); 
+
+    
+    
+    console.log( screen.availWidth );  // 电脑屏幕的分辨率
+
+    //鼠标滚轮事件
+        elem.onmousewheel = function(ev){   //鼠标滚轮事件
+            //console.log(ev.wheelDelta);  //检测滚动的数值，向下-120 向上120
+            if(ev.wheelDelta < 0){  //下
+                elem.style.height = elem.offsetHeight + 10 + 'px';
+            }
+            else{  //上
+                elem.style.height = elem.offsetHeight - 10 + 'px';
+            }
+            return false;
+        };

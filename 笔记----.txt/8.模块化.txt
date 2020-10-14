@@ -1,0 +1,113 @@
+一个模块就是实现特定功能的文件，有了模块，我们就可以更加方便地使用别人的代码，想要什么功能，就加载什么模块。
+    
+    模块化特点：
+        1.形成一个独立的文件，例如：.js文件
+        2.有封闭的环境，对外提供接口，外面才能使用模块
+        3.模块与模块之间可以互相调用
+
+    好处： 
+        1. 可以使用第三方模块
+        2. 解决冲突
+        3. 解决依赖
+
+    注：在ES6出现之前，前端是不支持模块化操作的。
+
+
+
+
+        /* var foo = 123;
+        export default foo;  //把foo提供出去，对外的接口 (单一的接口) */
+
+        //如何在一个模块中引入另外一个模块
+        //import xxx from './a.js';    //xxx 就是 export default 对应的值  foo
+
+
+        /* var foo = 123;
+        var bar = 456;
+        export default { foo , bar };  // 返回返回一个对象，提供多个给外面使用 */
+
+        //import obj from './a.js';  //接受
+        //console.log(obj.foo);
+        //console.log(obj.bar); 
+
+
+        // export var foo = 123;   //对外提供接口  (多个的接口)
+        // export var bar = 456;   //对外提供接口
+        // export function show(){}
+
+        // 注：多个接口的引入方式，是需要解构操作
+        /* import { foo , bar , show } from './a.js';
+        console.log( foo );
+        console.log( bar );
+        console.log( show ); */
+
+
+
+        export var foo = 123;           //多接口和单接口混合的情况下
+        export var bar = 456;  
+        function show(){}
+        export default show;
+
+        // 多接口和单接口混合的情况下，先写单接口引入再写多接口的引入
+        import show , { foo , bar } from './a.js';
+        console.log( foo );
+        console.log( bar );
+        console.log( show );
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+require.js : 库 , 它也是来做模块化开发的。
+
+    // es6之前如果想对前端做模块化开发，就得用require.js。
+    // require.js : 兼容性比较好。很多第三方的模块，是不支持es6模块方式。
+    //     比如：jquery.js ，如果想让jQ也能进行模块化方式，用require.js是可以的。
+
+
+    //define() : 定义一个封闭的环境
+
+        define([] , function(){         //（向外提供接口）
+            var a = 10;
+            return a;        // 类似于 ES6 中的 export default ||  export
+        });
+
+
+
+    // [] : 就是引入其他模块的地址，而且是不加后缀名的  -> 类似 ES6中 import 
+    //function(){} : 中的参数，就是模块对外的接口对应的值
+
+            requirejs.config({                    //配置别名
+                paths : {
+                    "jquery" : "./jquery3.5.1"   // 起了个别名
+                }
+            })
+
+            define(['./a' , './jquery'],function(a,$){      //（接受接口）
+                console.log(a);
+                console.log($);
+            });
+
+
+
+
+-----------------------------------------------------------------------------------
+前端模块化发展的历史？
+
+        2009年 -> 美国程序员 Node.js作者 
+
+        JS : 单线程 -> 任务需要排队 ， JS有异步。
+
+        Node.js 就是可以让 JS在后端运行。
+
+        后端有有模块化开发思想，Node.js中必须要有模块化思想：
+
+            module.exports -> 对外的接口
+            require() -> 引入其他模块
+
+        
+        大神们准备把Node.js的模块思想，移植到前端。
+            require.js  ->  define();  就是解决异步调用的问题，还可以产生封闭的环境。
+
+        ECMA组织，发现前端模块化越来越火，ES6 -> 推出了原生的前端模块化开发。

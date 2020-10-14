@@ -1,0 +1,249 @@
+JS历史
+    1995 : 艾奇 -> liveScript  -> JavaScript
+    1996 : 微软 -> IE浏览器 -> JScript
+
+    第一次浏览器大战，两强对立 ，IE95%。网景公司被美国在线收购了。
+        网景浏览器的代码开源了，非盈利组织(mozlli，后续就是火狐)。
+
+    在浏览器大战期间：JavaScript和JScript要进行规范统一。代码都提交给了一个中立的组织（ECMA）
+        ECMAScript是规范       
+        JS ：  ECMAScript （底层的核心，语言的规范）、 DOM、BOM(还没有完全的规范化)
+
+
+let const
+
+    let跟var的区别：
+        //不具备块级作用域
+	    //不能重复定义
+        //不具备变量提升
+
+    const : 定义常量
+        //常量的值不能改变(当操作对象的时候，如果整体改变是不行的，如果只改变子项是可以的)
+        //必须定义初始值
+        //规范要求命名大写
+
+    //const a = [1,2,3];   // 对象的引入( 内存堆栈，内存地址 )
+    //a.push(4);      //只是改变的内存中的栈中的值，没有改变内存的地址。
+    //a = [1,2,3,4];    //改变了对象在内存中的地址。
+
+
+解构赋值:简化赋值的一种手段。
+
+        let [a,b,c] = [1,2,3];
+        let { username , age } = { username : 'xiaoming' , age : 20 };
+
+        let [ a , { age } , b ] = [ 1 , {sername : 'xiaoming' , age : 20} , 2 ]; 
+    
+------------------------------------
+... : ES6的语法 , 1. 剩余参数 (注：只能给解构中的最后一个变量进行使用)  2. 扩展运算符
+
+        let [a,b,...c] = [1,2,3,4,5];
+        console.log(a,b,c);   // c [3, 4, 5]
+
+        剩余参数 ；除了可以在解构中进行使用，还可以在函数中进行使用
+        function foo(a,b,...c){
+            console.log(c);   //[3, 4, 5] 
+        }
+        foo(1,2,3,4,5);
+
+
+
+扩展运算符 : 剩余参数的逆运算  ...
+
+    var a = [1,2,3];
+    var b = [ 4 , 5 , ...a ];
+    console.log( b ); 
+
+    //var obj = { username : 'xiaoming' , age : 20 };
+    //var obj2 = { gender : '男' , ...obj };
+    //console.log( obj2 );
+
+
+    // 取一组数中的最大值
+    //var arr = [2,3,4,5];
+    //console.log( Math.max(...arr) );
+
+    //2. 伪数组转数组
+    /* function foo(){
+       console.log( [...arguments].sort() );
+    }
+    foo(1,3,2,4,5); */
+-------------------------
+默认参数：解构赋值中。函数中。
+
+    let [a,b,c=0] = [1,2,3];  //c有值的时候是那个值，没有的时候是默认值
+    console.log( c );
+
+    /* function foo(a,b,c=0){
+        console.log(c);
+    }
+    foo(1,2); */
+
+    
+---------------
+模板字符串 : ``  反引号
+
+
+                var a = 'hello';
+                var str = `${a} world!!!`;
+    
+
+    // 可以很好的处理字符串折行的问题
+                /* var str = `<div>
+                                <span>aaaaa</span>
+                            </div>`; */
+
+
+                /* let sty = 'box';
+                let content = 'aaaaa';
+                let str = `<div class="${sty}">
+                    <span>${content}</span>
+                </div>`; */
+    
+    //支持简单的运算 : 运算符
+
+                //let str = `<div>${ 1 + 1 }</div>`;
+                //let str = `<div>${ true ? 1 : 2 }</div>`;
+                //let str = `<div>${ 'hello'.substring(1,3) }</div>`;
+                // let str = `<div>${ [1,2,3].reverse() }</div>`;
+        
+
+    
+              
+                document.body.innerHTML += `
+                    <ul>
+                        ${
+                            [0,1,2,3,4].map(function(v){
+                                return `<li>${v}</li>`;
+                            }).join('')
+                        }
+                        <span>span</span>
+                    </ul>
+                `;
+
+
+
+
+--------------------------------------------------------------------------------------------
+
+扩展运算符 : 剩余参数的逆运算  ...
+
+                /* var a = [1,2,3];
+                var b = [ 4 , 5 , ...a ];
+                console.log( b ); */
+
+                //var obj = { username : 'xiaoming' , age : 20 };
+                //var obj2 = { obj : obj };                     // value和key在对象中是同样的名字，是可以简写的
+                //var obj2 = { gender : '男' , ...obj };
+                //console.log( obj2 );
+
+    
+
+        取一组数中的最大值
+                //var arr = [2,3,4,5];
+                //console.log( Math.max(...arr) );
+
+        2. 伪数组转数组
+
+                /* function foo(){
+                        console.log( [...arguments].sort() );
+                }
+                foo(1,3,2,4,5); */
+
+
+
+--------------------------------------------------------------------------------------------
+
+箭头函数 : 函数的一种写法，改写函数表达式的方式。
+
+                /* function foo(){      //函数声明
+                }
+
+                var foo = function(){    //函数表达式
+                }; */
+                //var foo = () => {};   //箭头函数
+
+
+        带一个参：/* var foo = function(x){  
+                };
+                var foo = x => {};          // 当函数只有一个形参，可以只写写参数，不用加小括号 */
+
+
+                /* var foo = function(x,y){  
+                };
+                var foo = (x,y) => {};  */          //当函数有多个形参的时候，就必须添加小括号
+
+
+        有返回值：/* var foo = function(x){  
+                    return 123;
+                };
+                var foo = x => 123; */      // 如果函数中只有return语句，就可以这样简写。
+
+
+                /* var foo = function(x){  
+                    x += x;
+                    return 123;
+                };
+                var foo = x => {
+                    x += x;
+                    return 123;
+                }; */
+
+
+               
+                /* var foo = function(x){
+                    return {
+                        username : 'xiaoming'       
+                    }
+                }; */
+                /* var foo = x => {
+                    return {
+                        username : 'xiaoming'           //return语句返回对象
+                    }
+                }; */
+
+                /* var foo = x => ({
+                    username : 'xiaoming'               //return语句返回对象
+                }); */
+
+                
+
+        事件函数：/* document.onclick = function(ev){
+                    console.log(123);
+                };
+                document.onclick = ev => {
+                    console.log(123);
+                }; */
+
+        定时器： /* setTimeout(function(){
+                    console.log(123);
+                },1000);
+                setTimeout(()=>{
+                    console.log(123);
+                },1000); */
+
+    
+
+        区别：
+                    1. this指向问题
+                    2. 不可以使用arguments
+                    3. 不可以当作构造函数 : 面向对象相关的内容 ，构造函数就是普通的函数，不能是箭头函数 */
+
+                
+                 document.onclick = function(){
+                     //this : document
+
+                     //setTimeout(function(){
+                         //this : window
+                     //},1000);
+
+                     setTimeout(()=>{            //箭头函数不会对this造成影响，this继续向外层函数进行查找
+                         //this : document
+                         console.log(this);
+                     },1000);
+                 };
+
+                var foo = ()=>{
+                    console.log( arguments );           //报错
+                };                                      //不可以使用arguments
+                foo(1,2,3,4,5);

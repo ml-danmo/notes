@@ -1,0 +1,40 @@
+
+    四种操作属性的方式：
+         1. 点                      ✔
+         2. []                      ✔  优势：适合把属性做成变量对待的时候
+         3. getAttribute()          ✔  可以获取自定义属性 ( 以前的方式 )
+         4. data-*                  ✔ H5新提供的，获取自定义属性 ( 推荐的方式 )
+
+    var elem = document.getElementById('elem');
+ 1:   console.log(  elem.title  );
+--------------------------------------------------------------
+
+ 2:   console.log( elem['title'] );
+    elem['title'] = 'haha';
+
+    elem.style.background = 'red';
+    elem['style']['background'] = 'red';
+
+    css('color' , 'blue');
+    function css(attr , value){
+        elem.style[attr] = 'blue';
+    }
+
+
+ -----------------------------------------------------------------
+
+    var elem = document.getElementById('elem');
+    console.log( elem['qianfeng'] );
+    
+ 3:   console.log(   elem.getAttribute('qianfeng')   );
+    elem.setAttribute('qianfeng','新的值');
+
+ 4.   console.log( elem.dataset.qianfeng );
+    elem.dataset.qianfeng = '新的值';
+
+
+     点或者[]虽然不能直接通过标签添加属性和获取属性，但是在JS中可以添加属性以及获取属性。
+    elem.qianfeng = '千锋';
+    console.log( elem.qianfeng );
+
+    

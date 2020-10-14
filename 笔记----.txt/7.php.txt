@@ -1,0 +1,376 @@
+1. 在网址上输入 www.baidu.com  ->  为什么能访问到对应的页面？
+
+   本地写好了一个html文件  ->  访问index.html ->  有网没网都不会影响访问 -> 为什么呢？ -> 因为这就是我电脑里的文件。
+
+   浏览器输入 www.baidu.com -> 没有网络的时候是访问不到的 ->  百度的所有页面（资源）, 远程的电脑里，所以访问的时候必须要有网 （ 一般这个远程的电脑，我们叫做远程服务器 ）
+
+
+for(var i=0;i<1000;i++){
+    ul.innerHTML += '<li>111</li>';
+}
+
+var str = '';
+for(var i=0;i<1000;i++){
+    str += '<li>111</li>';
+}
+ul.innerHTML = str;  //只重排了一次和重绘了一次
+
+
+2. 如何开发动态网站？
+
+    除了前端  HTML CSS JS 
+    学习后端  php
+    开发环境  服务器  apache
+    数据库  mysql 
+
+3. 安装集成开发软件？
+
+    wamp  https://www.wampserver.com/
+
+4. 如何使用wamp?
+
+    右键 -> 选择语言  chaniese
+
+    左键 -> localhost 访问入口页面
+        http://localhost/ -> 服务器给我们分配了一个本地的域名
+        http://127.0.0.1/ -> 服务器给我们分配了一个本地的IP
+
+        端口：http协议的默认端口80  https默认端口 443
+
+        当有多个服务器开启的时候：怎么解决冲突呢？通过端口
+            A服务器 : localhost:80
+            B服务器 : localhost:81
+            C服务器 : localhost:82
+
+    www目录：
+        www目录就是http://localhost/
+        通过url就可以打开对应服务器上的页面
+
+    数据库：
+        通过左键访问 phpmyadmin
+            默认用户名：root 密码 : 空
+
+5. php预习？
+
+    http://phpbook.phpxy.com/33183
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+php
+
+    输出：
+
+        print 123;          //只能输出一个值
+        echo 123 , 456;     // 多个值一起输出。
+        print_r([1,2,3]);   // print_r()输出对象类型。
+        //注：echo print 只能输出基本类型，不能输出对象。
+    
+
+    php定义变量 , $是需要写的
+
+        $foo = 123;
+        echo $foo;
+
+        $foo = 'hello';
+        echo $foo . 'world';     // 通过 点 来进行  字符串的链接。
+
+
+    php中的引号是有区别的：单引号和双引号
+
+        //$foo = 'hello';
+        //echo "{$foo}world";       //双引号有点类似于 模板字符串`` ，如果字符串不用变量方式的话，一般用单引号
+
+    php定义数组
+
+        //$foo = [1,2,3,4];   // 数值型数组
+        //echo $foo[0];
+        //echo count($foo);   //数组的长度
+
+    php： for while ...
+
+        for($i=0;$i<count($foo);$i++){
+            echo $foo[$i] . '<br>';
+        } 
+
+
+    $foo = [ 'username'=>'xiaoming' , 'age'=>20 ];  //关联型数组 , 针对遍历 foreach()
+
+        echo count($foo);
+        echo $foo['username'];
+
+        foreach( $foo as $key => $value ){
+            echo $key;      // 属性
+            echo $value;    // 值
+        } 
+
+    php对象是怎么做的呢？
+
+            $obj = new StdClass();       // 这种方式是添加不了方法的，只能添加属性。
+            $obj->name = 'xiaoming';    //添加一条属性
+            $obj->showName = function(){
+                //echo '我叫：' . $this->name;
+                echo 123;
+            };
+            echo $obj->name;
+            $obj->showName();  // ???  */
+
+            //php中如何写面向对象 ( 了解一下就可以了 )
+            /* class Person {    //这种class方式是可以添加属性和方法的，所以可以调用方法。
+                public $username = 'xiaoming';    
+                public function showName(){
+                    echo $this->username;
+                }
+            }
+
+            $p = new Person();
+            $p->showName(); 
+
+    var_dump() : 打印值和对应数据类型的
+
+            //$foo = 123;
+            //var_dump( gettype($foo) );  // 'integer' -> 表示是一个整数类型
+            //settype($foo , 'string');
+            //var_dump( $foo );   // string '123'
+
+
+    字符串方法 ： https://www.php.net/manual/zh/ref.strings.php
+
+            //$foo = 'hello world';
+            //var_dump( str_repeat($foo , 3) );
+            //echo str_word_count($foo);   //这个字符串一共有多少个单词
+
+            //var_dump( strpos($foo , 'e') );  // 根据单词，来找到对应位置 找不到返回false , 跟JS中的indexOf()很像
+
+    数组方法 : https://www.w3school.com.cn/php/php_ref_array.asp
+
+            $foo = [1,2,3];
+            array_push( $foo , 4 );
+
+            var_dump( $foo ); 
+
+            $foo = [1,2,3];
+            $foo[] = 4;      //往数组的最后添加一项
+            print_r($foo);
+
+
+    定义函数
+
+            /* function foo(){
+                echo 123;
+            }
+            foo(); */
+
+
+            /* $foo = function(){
+                echo 123;
+            };
+            $foo(); */
+
+        
+            /* function bar(){
+
+                $a = 10;   //利用传参得到$a
+            
+                function foo($a){   
+                    echo $a;   
+                }
+                foo($a);
+
+            }
+            bar(); */
+
+
+
+
+        
+
+
+
+-----------------------------------------------------------------------------------------------------
+表单提交
+
+        action属性：就是表单提交的地址 , 把表单中的数据都给了data.php这个文件 
+        数据：给指定的表单元素添加name属性和value属性  
+
+    <!--  method : 提交方式。
+            默认：GET方式。  POST  PUT  DELETE 等等。
+
+            前端与后端的对数据主要做：增删改查的操作。
+
+            GET -> 查
+            POST -> 增
+            PUT -> 改
+            DELETE -> 删
+
+            GET -> 查 , POST 增  改   删 
+        
+            GET和POST的区别：
+            1. 职能不同。
+            2. 携带数据的方式不同。
+                GET : 把数据方法网址问号的后面，key1=value1&key2=value2
+                POST : 数据在一个隐藏的body体中，然后通过http携带到后端。
+            3. 不要用GET去做查询之外的事情，因为可能存在安全隐患（数据是在url上暴露的）
+                当正确使用GET和POST去做自己应该做的事的时候，都是安全的。
+            4. 数据的传输量：
+                GET和POST本身是没有限制传输量大小的。
+                    GET是因为url网址过长浏览器进行限制的。
+                    POST可以被服务器进行大小限制。
+        -->
+
+        <!-- <form action="./data.php" method="POST">            
+                <div>用户名：<input type="text" name="username"></div>
+                <div>密码：<input type="password" name="password"></div>
+                <input type="submit" value="登录">
+        </form> -->
+
+
+        <!-- 表单提交文件，必须是POST请求。 -->
+        <!--  enctype  提交类型
+                    默认： application/x-www-form-urlencoded （提交的是字符串类型）
+                    multipart/form-data（提交文件）
+        -->
+
+        <form action="./data.php" method="POST" enctype="multipart/form-data">           // 提交文件
+                <input type="file" name="filename">
+                <input type="submit" value="上传">
+        </form>
+        <div>我的头像：<img src="" alt=""></div>
+        <script>
+            var img = document.querySelector('img');
+            img.src = './uploads/doutu.jpg?m=' + (new Date()).getTime();
+        </script>
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+mysql    
+        
+        url中请求的方式     ->都是GET请求
+
+        在公司里，前端和后端是配合开发的。
+        前端先做页面，后端做数据接口。
+        如果后端做的是GET接口，直接通过浏览器测试。
+        如果后端做的值POST接口，那么可以通过工具进行测试，postman、Taland API 
+
+
+        添加到PHP代码中的，防止PHP中文乱码
+        header('Content-Type:text/html; charset=utf-8'); 
+
+    
+    关系型数据库 ( mysql ) 与  非关系型数据库 ( redis )
+    
+        关系型数据库 : 表与表之间可能产生关联。
+
+        数据库也是要写代码：create database [db_name]
+
+        预习资料：https://www.liaoxuefeng.com/wiki/1177760294764384
+
+
+
+
+    php与数据库链接
+
+            //防止php传输数据的时候乱码，指定传输的编码
+            header('Content-Type:text/html; charset=utf-8'); 
+
+            // 1. 域名  2. 数据库用户名  3. 数据库密码  4. 要添加的数据库
+            @$con = mysqli_connect('localhost' , 'root' , '123' , 'h52003');     //@：防止出错
+
+            if( !$con ){
+                echo '数据库连接失败';
+                return;
+            }
+            
+            mysqli_query($con,'set names utf8');
+
+            //$sql = "select * from users where id > 4";     //定义了sql语句的字符串
+            //$query = mysqli_query($con , $sql);           // 执行sql语句
+            //print_r( $query );
+            //echo mysqli_num_rows($query);                 //查询出来的是几条数据
+
+
+
+
+
+
+
+            // $rows =mysqli_fetch_row($result);
+            // print_r($rows);
+            // $rows =mysqli_fetch_row($result);
+            // print_r($rows);
+            // $rows =mysqli_fetch_row($result);
+            // print_r($rows);
+
+            // while($rows =mysqli_fetch_row($result)){     //数值型数组
+            //     print_r($rows);
+            // }
+
+            // while($rows =mysqli_fetch_assoc($result)){     //关联性数组
+            //     print_r($rows);
+            // }
+
+            // while($rows =mysqli_fetch_array($result)){     //关联性数组 + 数值型数组
+            //     print_r($rows);
+            // }
+
+            // while($rows =mysqli_fetch_object($result)){     //对象
+            //     print_r($rows->name);
+            // }
+
+
+
+            while($rows =mysqli_fetch_assoc($result)){     //json
+                $arr[] = $rows;
+            }
+
+            //print_r(json_encode($arr));
+            echo (json_encode($arr));   //转json
+
+
+
+            $sql = "select * from message order by time desc limit 0,3";  //order by time desc 排序（倒叙） limit 限制几条数据
+
+
+
+-----------------------------------------------------------------------------------------------------
+ajax
+
+        ajax : 属于前端技术，在无刷新的情况下，进行前后端数据通信。ajax是异步的。
+            //注：ajax必须在服务器环境下使用。
+            //ajax -> 2005年   ajax2 -> 2009年
+                //onload -> xhr.readyState == 4
+
+        var xhr = new XMLHttpRequest();   //先创建一个xhr对象，ajax操作都是在这个xhr对象下完成的。
+        
+        xhr.onreadystatechange = function(){            // 监听请求的整个过程
+            //console.log( xhr.readyState );            //会得到当前阶段的数值
+            if(xhr.readyState == 4 && xhr.status == 200){           //数据已经就绪，准备响应
+                console.log( xhr.responseText );                 //得到响应回来的数据
+            }
+        }; 
+        xhr.onload = function(){                 // 监听数据已经就绪  xhr.readyState == 4
+            if(xhr.status == 200){ 
+                console.log( xhr.responseText );
+            }
+        };
+        // open() : 请求方式、请求地址、是否异步
+        xhr.open('GET' , '7_data.php' , true);
+        // send() : 发送数据给后端 , get请求时数据不写入send方法中，post请求才把数据写入到send()方法中
+        xhr.send(null);
+
+
+
+
+--------------------------------------------------------------------------------------------------------------
+
+    //require('./connect2.php');  // 一旦出错不会向下执行
+    //include('./connect2.php');    // 一旦出错了还会向下执行
+    //echo 456;
+
+    // require_once();   //文件只能被引入一次
+    // include_once();
